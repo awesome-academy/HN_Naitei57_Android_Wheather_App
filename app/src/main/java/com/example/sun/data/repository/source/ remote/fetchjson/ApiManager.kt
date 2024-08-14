@@ -2,7 +2,6 @@ package com.example.sun.data.repository.source.remote.fetchjson
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import com.example.sun.data.model.CurrentWeather
 import com.example.sun.data.repository.source.remote.OnResultListener
 import com.google.gson.Gson
 import java.io.BufferedReader
@@ -17,9 +16,6 @@ import java.util.concurrent.Executors
 class ApiManager private constructor(private val threadPoolSize: Int) {
     private lateinit var mExecutor: ExecutorService
     private val mHandler = Handler(Looper.getMainLooper())
-    private val logTag = "ApiManager"
-    private val timeOut = 15000
-    private val methodGet = "GET"
 
     private fun getExecutor(): ExecutorService {
         if (!::mExecutor.isInitialized) {
@@ -28,15 +24,16 @@ class ApiManager private constructor(private val threadPoolSize: Int) {
         return mExecutor
     }
 
-    fun executeApiCall(
+    fun <T> executeApiCall(
         urlString: String,
-        listener: OnResultListener<CurrentWeather>,
+        responseType: Class<T>,
+        listener: OnResultListener<T>,
     ) {
         getExecutor().submit {
             try {
                 val responseJson = getJsonStringFromUrl(urlString)
                 val gson = Gson()
-                val weather = gson.fromJson(responseJson, CurrentWeather::class.java)
+                val weather = gson.fromJson(responseJson, responseType)
                 mHandler.post {
                     listener.onSuccess(weather)
                 }
@@ -53,9 +50,9 @@ class ApiManager private constructor(private val threadPoolSize: Int) {
         val httpURLConnection = url.openConnection() as? HttpURLConnection
         return try {
             httpURLConnection?.run {
-                connectTimeout = timeOut
-                readTimeout = timeOut
-                requestMethod = methodGet
+                connectTimeout = TIME_OUT
+                readTimeout = TIME_OUT
+                requestMethod = METHOD_GET
                 doOutput = true
                 connect()
             }
@@ -69,17 +66,17 @@ class ApiManager private constructor(private val threadPoolSize: Int) {
                 bufferedReader.close()
                 stringBuilder.toString()
             } else {
-                Log.d(logTag, "HTTP error code: ${httpURLConnection?.responseCode}")
+                Log.d(LOG_TAG, "HTTP error code: ${httpURLConnection?.responseCode}")
                 throw Exception("City not found: $urlString")
             }
         } catch (e: MalformedURLException) {
-            Log.d(logTag, "MalformedURLException: ${e.message}")
+            Log.d(LOG_TAG, "MalformedURLException: ${e.message}")
             throw e
         } catch (e: IOException) {
-            Log.d(logTag, "IOException: ${e.message}")
+            Log.d(LOG_TAG, "IOException: ${e.message}")
             throw e
         } catch (e: Exception) {
-            Log.d(logTag, "Exception: ${e.message}")
+            Log.d(LOG_TAG, "Exception: ${e.message}")
             throw e
         } finally {
             httpURLConnection?.disconnect()
@@ -87,6 +84,10 @@ class ApiManager private constructor(private val threadPoolSize: Int) {
     }
 
     companion object {
+        const val LOG_TAG = "ApiManager"
+        const val TIME_OUT = 15000
+        const val METHOD_GET = "GET"
+
         @Volatile
         private var instance: ApiManager? = null
 

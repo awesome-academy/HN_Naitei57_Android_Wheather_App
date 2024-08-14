@@ -35,4 +35,27 @@ class HomePresenter(
             city,
         )
     }
+
+    override fun getCurrentLocationWeather(
+        latitude: Double,
+        longitude: Double,
+    ) {
+        weatherRepository.getCurrentLocationWeather(
+            object : OnResultListener<CurrentWeather> {
+                override fun onSuccess(data: CurrentWeather) {
+                    handler.post {
+                        view?.onGetCurrentLocationWeatherSuccess(data)
+                    }
+                }
+
+                override fun onError(exception: Exception?) {
+                    handler.post {
+                        view?.onError(exception.toString())
+                    }
+                }
+            },
+            latitude,
+            longitude,
+        )
+    }
 }

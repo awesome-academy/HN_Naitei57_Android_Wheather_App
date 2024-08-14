@@ -13,5 +13,11 @@ interface CurrentWeatherDataSource {
             listener: OnResultListener<CurrentWeather>,
             city: String,
         )
+
+        fun getCurrentLocationWeather(
+            listener: OnResultListener<CurrentWeather>,
+            latitude: Double,
+            lontitude: Double,
+        )
     }
 }

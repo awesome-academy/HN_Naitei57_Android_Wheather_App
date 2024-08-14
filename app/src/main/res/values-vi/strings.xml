@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Weather Forecast</string>
+    <string name="splash_screen">Splash Screen</string>
+    <string name="hello_world">Hello World!</string>
+    <string name="home">Home</string>
+    <string name="setting">Setting</string>
+    <string name="favourite">Favourite</string>
+    <string name="test_location">Ha Noi</string>
+    <string name="test_current_day">July 18, 2024</string>
+    <string name="test_current_text">Sunny</string>
+    <string name="test_current_temperature">30</string>
+    <string name="test_current_wind_speed">5.4</string>
+    <string name="test_current_humidity">83</string>
+    <string name="temperature">o</string>
+    <string name="wind_speed">Wind speed</string>
+    <string name="wind_speed_unit">km/h</string>
+    <string name="humidity">Humidity</string>
+    <string name="humidity_unit">%</string>
+    <string name="line">|</string>
+    <string name="forecast_report">Forecast report</string>
+    <string name="percent_cloud">Percent Cloud</string>
+    <string name="speed_unit">m/s</string>
+    <string name="percent">%</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_map_api_key">AIzaSyA7Xo6jfheLpot-Fr4Gd8E1yUZyEQBhSYI</string>
+    <string name="city_name">City Name</string>
+    <string name="max_temp">Max Temp</string>
+    <string name="min_temp">Min Temp</string>
+    <string name="forecast_detail">Forecast Detail:</string>
+    <string name="back">Back</string>
+    <string name="hanoi">Hanoi</string>
+    <string name="vietnam">VietNam</string>
+    <string name="favourite_cities">Favourite Cities</string>
+</resources>

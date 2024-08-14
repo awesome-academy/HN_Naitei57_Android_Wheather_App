@@ -1,9 +1,7 @@
 package com.example.sun.data.repository.source.remote
 
-import com.example.sun.data.model.CurrentWeather
-
 interface OnResultListener<T> {
-    fun onSuccess(data: CurrentWeather)
+    fun onSuccess(data: T)
 
     fun onError(exception: Exception?)
 }

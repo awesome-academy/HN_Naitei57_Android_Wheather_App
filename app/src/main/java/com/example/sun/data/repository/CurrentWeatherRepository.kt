@@ -1,4 +1,5 @@
 package com.example.sun.data.repository.source
+
 import com.example.sun.data.model.CurrentWeather
 import com.example.sun.data.repository.source.remote.OnResultListener
 
@@ -16,6 +17,15 @@ class CurrentWeatherRepository(
     ) {
         remote.getCurrentWeather(listener, city)
     }
+
+    override fun getCurrentLocationWeather(
+        listener: OnResultListener<CurrentWeather>,
+        latitude: Double,
+        lontitude: Double,
+    ) {
+        remote.getCurrentLocationWeather(listener, latitude, lontitude)
+    }
+
     companion object {
         private var instance: CurrentWeatherRepository? = null
 
