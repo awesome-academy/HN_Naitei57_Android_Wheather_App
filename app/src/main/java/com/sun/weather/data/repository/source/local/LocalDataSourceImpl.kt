@@ -17,6 +17,13 @@ class LocalDataSourceImpl(context: Context) : WeatherDataSource.Local {
         return SharedPrefManager.getString(key, "") ?: ""
     }
 
+    override fun isFavoriteLocationExists(
+        cityName: String,
+        countryName: String,
+    ): Boolean {
+        return dbHelper.isFavoriteLocationExists(cityName, countryName)
+    }
+
     override fun getCurrentWeatherLocal(listener: OnResultListener<CurrentWeather>) {
         val currentWeather = dbHelper.getCurrentWeatherByCity(SharedPrefManager.getString("cityName", "") ?: "")
         if (currentWeather != null) {

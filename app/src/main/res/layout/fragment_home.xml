@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/color_background"
-    tools:context="com.example.sun.screen.home.HomeFragment">
+    tools:context="com.sun.weather.screen.home.HomeFragment">
 
     <ImageView
         android:id="@+id/ic_location"
@@ -40,16 +40,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ic_notification"
-        android:layout_width="@dimen/icon_size_small"
-        android:layout_height="@dimen/icon_size_small"
-        android:layout_marginTop="@dimen/margin_xlarge"
-        android:layout_marginEnd="@dimen/margin_large"
-        android:src="@drawable/ic_notification"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
         android:id="@+id/iv_current_weather"
         android:layout_width="@dimen/image_weather_size"
         android:layout_height="@dimen/image_weather_size"
@@ -60,10 +50,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/constraint_layout"
         android:layout_width="@dimen/display_size"
         android:layout_height="@dimen/display_size"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_4"
+        android:layout_marginTop="@dimen/dp_8"
         android:background="@drawable/color_background_display_field"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
@@ -89,21 +80,10 @@
             android:layout_marginTop="@dimen/margin_small"
             android:text="@string/test_current_temperature"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_100"
+            android:textSize="@dimen/sp_60"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_current_day" />
-
-        <TextView
-            android:id="@+id/tv_temperature"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/temperature"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_72"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/tv_current_temperature"
             app:layout_constraintTop_toBottomOf="@id/tv_current_day" />
 
         <TextView
@@ -112,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="@string/test_current_text"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_24"
+            android:textSize="@dimen/sp_30"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_current_temperature" />
@@ -122,7 +102,7 @@
             android:layout_width="@dimen/icon_size_xlarge"
             android:layout_height="@dimen/icon_size_xlarge"
             android:layout_marginStart="@dimen/margin_medium_large"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/dp_4"
             android:src="@drawable/wind"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_current_text" />
@@ -186,7 +166,7 @@
             android:padding="@dimen/padding_micro"
             android:text="@string/line"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20"
+            android:textSize="@dimen/sp_20"
             app:layout_constraintStart_toEndOf="@id/tv_percent_cloud"
             app:layout_constraintTop_toBottomOf="@id/tv_current_text" />
 
@@ -199,7 +179,7 @@
             android:padding="@dimen/padding_micro"
             android:text="@string/test_current_wind_speed"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20"
+            android:textSize="@dimen/sp_20"
             app:layout_constraintStart_toEndOf="@id/tv_line_1"
             app:layout_constraintTop_toBottomOf="@id/tv_current_text" />
 
@@ -212,7 +192,7 @@
             android:padding="@dimen/padding_micro"
             android:text="@string/test_current_wind_speed"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20"
+            android:textSize="@dimen/sp_20"
             app:layout_constraintStart_toEndOf="@id/tv_line_1"
             app:layout_constraintTop_toBottomOf="@id/tv_current_text" />
 
@@ -220,11 +200,11 @@
             android:id="@+id/tv_wind_speed_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/dp_4"
             android:padding="@dimen/padding_micro"
             android:text="@string/speed_unit"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20"
+            android:textSize="@dimen/sp_20"
             app:layout_constraintStart_toEndOf="@id/tv_current_percent_cloud"
             app:layout_constraintTop_toBottomOf="@id/tv_current_text" />
 
@@ -237,7 +217,7 @@
             android:padding="@dimen/padding_micro"
             android:text="@string/percent"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20"
+            android:textSize="@dimen/sp_20"
             app:layout_constraintStart_toEndOf="@id/tv_current_percent_cloud"
             app:layout_constraintTop_toBottomOf="@id/tv_current_text" />
 
@@ -257,7 +237,7 @@
             android:layout_height="@dimen/icon_size_xlarge"
             android:layout_marginStart="@dimen/dp_40"
             android:layout_marginTop="@dimen/dp_12"
-            android:src="@drawable/humidity"
+            android:src="@drawable/sun"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ic_wind" />
 
@@ -271,76 +251,66 @@
 
             android:text="@string/humidity"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20"
+            android:textSize="@dimen/sp_20"
             app:layout_constraintStart_toEndOf="@+id/ic_humidity2"
             app:layout_constraintTop_toBottomOf="@+id/tv_percent_cloud" />
 
         <TextView
             android:id="@+id/tv_line_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_52"
-            android:layout_marginTop="@dimen/dp_12"
-            android:padding="@dimen/padding_micro"
+            android:layout_width="@dimen/dp_6"
+            android:layout_height="@dimen/dp_36"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_136"
             android:text="@string/line"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20"
-            app:layout_constraintStart_toEndOf="@+id/tv_humidity"
-            app:layout_constraintTop_toBottomOf="@+id/tv_line_2" />
+            android:textSize="@dimen/sp_20"
+            app:layout_constraintStart_toEndOf="@+id/tv_percent_cloud"
+            app:layout_constraintTop_toBottomOf="@+id/tv_current_temperature" />
 
         <TextView
             android:id="@+id/tv_current_humidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_3"
-            android:layout_marginTop="@dimen/dp_12"
-            android:padding="@dimen/padding_micro"
+            android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_16"
             android:text="@string/test_current_humidity"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20"
-            app:layout_constraintStart_toEndOf="@+id/tv_line_3"
+            android:textSize="@dimen/sp_20"
+            app:layout_constraintStart_toEndOf="@+id/tv_line_2"
             app:layout_constraintTop_toBottomOf="@+id/tv_current_percent_cloud1" />
 
         <TextView
             android:id="@+id/tv_humidity_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_2"
-            android:layout_marginTop="@dimen/dp_12"
-            android:padding="@dimen/padding_micro"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_92"
             android:text="@string/humidity_unit"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20"
-            app:layout_constraintStart_toEndOf="@+id/tv_current_humidity"
-            app:layout_constraintTop_toBottomOf="@+id/tv_wind_speed_unit1" />
+            android:textSize="@dimen/sp_20"
+            app:layout_constraintStart_toEndOf="@+id/tv_current_percent_cloud"
+            app:layout_constraintTop_toBottomOf="@+id/tv_current_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/btn_forecast_report"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_92"
-        android:layout_marginBottom="@dimen/dp_28"
-        android:backgroundTint="@color/white"
-        android:drawableRight="@drawable/ic_arrow_up"
-        android:text="@string/forecast_report"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btn_add_favourite"
-        android:layout_width="@dimen/dp_48"
-        android:layout_height="@dimen/dp_48"
-        android:layout_marginBottom="@dimen/dp_28"
-        android:background="@drawable/circle_background"
-        android:contentDescription="@string/favourite"
-        android:drawableTop="@drawable/ic_plus"
-        android:padding="@dimen/dp_8"
-        android:textColor="@color/black"
+    <androidx.cardview.widget.CardView
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginEnd="@dimen/dp_24"
+        android:layout_marginBottom="@dimen/dp_24"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="@dimen/dp_48"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_forecast_report" />
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <ImageView
+            android:id="@+id/btn_add_favourite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/heart_icon"
+            android:padding="@dimen/dp_8"
+            android:src="@drawable/ic_heart" />
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

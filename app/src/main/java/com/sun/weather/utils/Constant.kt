@@ -30,8 +30,11 @@ object Constant {
     const val LON_PARAM = "lon"
     const val QUERY_PARAM = "q"
     const val CNT_PARAM = "cnt"
+    const val LANGUAGE_PARAM = "lang"
     const val FORECAST_DAY = 7
     const val FORECAST_HOUR = 24
+    const val LANGUAGE_CODE_VIETNAMESE = "vi"
+    const val LANGUAGE_CODE_ENGLISH = "en"
 }
 
 object SharedPrefManager {
@@ -82,6 +85,10 @@ object SharedPrefManager {
         value: Int,
     ) {
         sharedPreferences.edit().putInt(key, value).apply()
+    }
+
+    fun contains(key: String): Boolean {
+        return sharedPreferences.contains(key)
     }
 }
 

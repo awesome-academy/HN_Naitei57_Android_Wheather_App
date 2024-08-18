@@ -10,6 +10,11 @@ interface WeatherDataSource {
     interface Local {
         fun getSelectedLocation(key: String): String
 
+        fun isFavoriteLocationExists(
+            cityName: String,
+            countryName: String,
+        ): Boolean
+
         fun getCurrentWeatherLocal(listener: OnResultListener<CurrentWeather>)
 
         fun saveCurrentWeather(currentWeather: CurrentWeather)

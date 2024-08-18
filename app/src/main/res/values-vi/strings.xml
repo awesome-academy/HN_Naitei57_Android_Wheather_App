@@ -34,5 +34,6 @@
     <string name="today">Hôm nay</string>
     <string name="weekly_forecast">Dự báo tuần tới</string>
     <string name="favourite_cities">Thành phố yêu thích</string>
-
+    <string name="choose_language" >Chọn ngôn ngữ</string>
+    <string name="already_favorite">Thành phố đã được thêm vào yêu thích,không thể thêm nữa</string>
 </resources>

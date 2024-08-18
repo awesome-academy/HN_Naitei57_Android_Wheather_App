@@ -93,4 +93,11 @@ class WeatherRepository(
     override fun getSelectedLocation(key: String): String {
         return local.getSelectedLocation(key)
     }
+
+    override fun isFavoriteLocationExists(
+        cityName: String,
+        countryName: String,
+    ): Boolean {
+        return local.isFavoriteLocationExists(cityName, countryName)
+    }
 }

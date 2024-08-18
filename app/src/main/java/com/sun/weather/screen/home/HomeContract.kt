@@ -31,5 +31,7 @@ interface HomeContract {
         fun onError(e: String)
 
         fun onGetDataFromLocalSuccess(currentWeather: CurrentWeather)
+
+        fun onSnackBar()
     }
 }

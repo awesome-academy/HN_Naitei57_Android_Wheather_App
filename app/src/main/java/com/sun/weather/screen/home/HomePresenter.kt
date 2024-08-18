@@ -72,12 +72,16 @@ class HomePresenter(
         cityName: String,
         countryName: String,
     ) {
-        val favouriteLocation =
-            FavouriteLocation(
-                cityName = cityName,
-                countryName = countryName,
-            )
-        weatherRepository.insertFavoriteWeather(favouriteLocation)
+        if (weatherRepository.isFavoriteLocationExists(cityName, countryName)) {
+            view?.onSnackBar()
+        } else {
+            val favouriteLocation =
+                FavouriteLocation(
+                    cityName = cityName,
+                    countryName = countryName,
+                )
+            weatherRepository.insertFavoriteWeather(favouriteLocation)
+        }
     }
 
     override fun saveCurrentWeather(currentWeather: CurrentWeather) {

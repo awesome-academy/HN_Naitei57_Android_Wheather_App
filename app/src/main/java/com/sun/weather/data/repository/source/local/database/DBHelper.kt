@@ -83,6 +83,26 @@ class DBHelper(context: Context?) :
         return db.delete(TABLE_FAVORITES, whereClause, whereArgs)
     }
 
+    override fun isFavoriteLocationExists(
+        cityName: String,
+        countryName: String,
+    ): Boolean {
+        val db = readableDatabase
+        val cursor =
+            db.query(
+                TABLE_FAVORITES,
+                arrayOf(COLUMN_CITY_NAME),
+                "$COLUMN_CITY_NAME = ? AND $COLUMN_COUNTRY_NAME = ?",
+                arrayOf(cityName, countryName),
+                null,
+                null,
+                null,
+            )
+        val exists = cursor.count > 0
+        cursor.close()
+        return exists
+    }
+
     fun insertCurrentWeather(currentWeather: CurrentWeather): Long {
         val db = writableDatabase
         val contentValues =

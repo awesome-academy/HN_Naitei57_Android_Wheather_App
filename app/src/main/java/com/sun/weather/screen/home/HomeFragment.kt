@@ -2,6 +2,7 @@ package com.sun.weather.screen.home
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.sun.weather.R
 import com.sun.weather.data.model.CurrentWeather
@@ -16,6 +17,7 @@ import com.sun.weather.utils.NetworkHelper
 import com.sun.weather.utils.RequestLocation.requestLocationAndFetchWeather
 import com.sun.weather.utils.base.BaseFragment
 import com.sun.weather.utils.ext.replaceFragment
+import kotlin.math.roundToInt
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContract.View {
     private lateinit var currentWeather: CurrentWeather
@@ -47,14 +49,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContract.View {
         viewBinding.icArrowDown.setOnClickListener {
             homePresenter?.getSelectedLocation(SELECTED_LOCATION)
         }
-
-        viewBinding.btnForecastReport.setOnClickListener {
-            replaceFragment(R.id.fragment_container, DetailFragment.newInstance(cityName!!), true)
-        }
         viewBinding.btnAddFavourite.setOnClickListener {
             val countryName = currentWeather.sys.country
             homePresenter?.saveFavoriteLocation(cityName!!, countryName)
             replaceFragment(R.id.fragment_container, FavouriteFragment.newInstance(), true)
+        }
+        viewBinding.constraintLayout.setOnClickListener {
+            replaceFragment(R.id.fragment_container, DetailFragment.newInstance(cityName!!), true)
         }
     }
 
@@ -70,8 +71,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContract.View {
         viewBinding.tvLocation.text =
             getString(R.string.city_name, currentWeather.nameCity, currentWeather.sys.country)
         cityName = currentWeather.nameCity
-        viewBinding.tvCurrentDay.text = currentWeather.day
-        viewBinding.tvCurrentTemperature.text = currentWeather.main.currentTemperature.toString()
+        viewBinding.tvCurrentDay.text = getString(R.string.today) + currentWeather.day
+        viewBinding.tvCurrentTemperature.text = currentWeather.main.currentTemperature.roundToInt().toString() + "°C"
         if (currentWeather.weathers.isNotEmpty()) {
             viewBinding.tvCurrentText.text = currentWeather.weathers[0].description
         }
@@ -105,6 +106,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContract.View {
 
     override fun onGetDataFromLocalSuccess(currentWeather: CurrentWeather) {
         updateUIWithCurrentWeather(currentWeather)
+    }
+
+    override fun onSnackBar() {
+        Toast.makeText(requireContext(), getString(R.string.already_favorite), Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

@@ -1,6 +1,7 @@
 package com.sun.weather.screen.detail
 
 import android.icu.text.SimpleDateFormat
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ImageButton
@@ -18,11 +19,19 @@ import com.sun.weather.utils.ext.goBackFragment
 import java.util.Date
 import java.util.Locale
 
-class DetailFragment(private val cityName: String) : BaseFragment<FragmentDetailBinding>(), DetailContract.View {
+class DetailFragment : BaseFragment<FragmentDetailBinding>(), DetailContract.View {
     private var detailPresenter: DetailPresenter? = null
     private lateinit var dailyAdapter: DailyAdapter
     private lateinit var hourlyAdapter: HourlyAdapter
     private var isNetworkAvailable = false
+    private var cityName: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            cityName = it.getString(ARG_CITY_NAME)
+        }
+    }
 
     override fun inflateViewBinding(inflater: LayoutInflater): FragmentDetailBinding {
         return FragmentDetailBinding.inflate(inflater)
@@ -38,15 +47,17 @@ class DetailFragment(private val cityName: String) : BaseFragment<FragmentDetail
             )
         detailPresenter?.setView(this)
         isNetworkAvailable = NetworkHelper.isNetworkAvailable(requireContext())
-        if (isNetworkAvailable) {
-            detailPresenter?.getWeeklyForecast(cityName)
-            detailPresenter?.getHourlyForecast(cityName)
-        } else {
-            detailPresenter?.loadWeeklyForecastFromLocal(cityName)
-            detailPresenter?.loadHourlyForecastFromLocal(cityName)
+        cityName?.let { name ->
+            if (isNetworkAvailable) {
+                detailPresenter?.getWeeklyForecast(name)
+                detailPresenter?.getHourlyForecast(name)
+            } else {
+                detailPresenter?.loadWeeklyForecastFromLocal(name)
+                detailPresenter?.loadHourlyForecastFromLocal(name)
+            }
+            viewBinding.tvToolbarTitle.text =
+                getString(R.string.city_name_app_bar, getString(R.string.forecast_detail), name)
         }
-        viewBinding.tvToolbarTitle.text =
-            getString(R.string.city_name_app_bar, getString(R.string.forecast_detail), cityName)
         val currentDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
         viewBinding.tvCurrentTime.text = currentDate
     }
@@ -80,8 +91,17 @@ class DetailFragment(private val cityName: String) : BaseFragment<FragmentDetail
     }
 
     companion object {
+        private const val ARG_CITY_NAME = "city_name"
         const val MY_TAG = "DetailFragment"
 
-        fun newInstance(cityName: String) = DetailFragment(cityName)
+        fun newInstance(cityName: String): DetailFragment {
+            val fragment = DetailFragment()
+            val args =
+                Bundle().apply {
+                    putString(ARG_CITY_NAME, cityName)
+                }
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

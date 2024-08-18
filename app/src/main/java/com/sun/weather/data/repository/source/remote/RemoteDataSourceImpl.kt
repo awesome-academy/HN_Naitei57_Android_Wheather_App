@@ -1,5 +1,7 @@
 package com.sun.weather.data.repository.source.remote
 
+import android.icu.util.ULocale.getLanguage
+import android.util.Log
 import com.sun.weather.data.model.CurrentWeather
 import com.sun.weather.data.model.HourlyForecast
 import com.sun.weather.data.model.HourlyForecastItem
@@ -8,6 +10,8 @@ import com.sun.weather.data.model.WeeklyForecastItem
 import com.sun.weather.data.repository.source.WeatherDataSource
 import com.sun.weather.data.repository.source.remote.fetchjson.ApiManager
 import com.sun.weather.utils.Constant
+import com.sun.weather.utils.Constant.LANGUAGE_CODE_ENGLISH
+import com.sun.weather.utils.Constant.LANGUAGE_CODE_VIETNAMESE
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -19,11 +23,14 @@ class RemoteDataSourceImpl : WeatherDataSource.Remote {
         listener: OnResultListener<CurrentWeather>,
         city: String,
     ) {
+        val langParam = getLanguage()
+        Log.v("ApiManager", langParam)
         val urlString =
             "${Constant.BASE_URL}${Constant.WEATHER_ENDPOINT}?" +
                 "${Constant.QUERY_PARAM}=$city&" +
                 "${Constant.APPID_PARAM}=${Constant.BASE_API_KEY}&" +
-                "${Constant.UNITS_PARAM}=${Constant.UNITS_VALUE}"
+                "${Constant.UNITS_PARAM}=${Constant.UNITS_VALUE}&" +
+                "${Constant.LANGUAGE_PARAM}=$langParam"
         apiManager.executeApiCall(
             urlString,
             CurrentWeather::class.java,
@@ -39,15 +46,29 @@ class RemoteDataSourceImpl : WeatherDataSource.Remote {
         )
     }
 
+    private fun getLanguage(): String {
+        val languageCode = Locale.getDefault().language
+        val langParam =
+            when (languageCode) {
+                LANGUAGE_CODE_VIETNAMESE -> "vi"
+                LANGUAGE_CODE_ENGLISH -> "en"
+                else -> "en"
+            }
+        return langParam
+    }
+
     override fun getCurrentLocationWeather(
         listener: OnResultListener<CurrentWeather>,
         latitude: Double,
         lontitude: Double,
     ) {
+        val langParam = getLanguage()
+        Log.v("ApiManager", langParam)
         val urlString =
             "${Constant.BASE_URL}${Constant.WEATHER_ENDPOINT}?${Constant.LAT_PARAM}=$latitude" +
-                "&${Constant.LON_PARAM}=$lontitude&${Constant.APPID_PARAM}=${Constant.BASE_API_KEY}" +
-                "&${Constant.UNITS_PARAM}=${Constant.UNITS_VALUE}"
+                "&${Constant.LON_PARAM}=$lontitude&${Constant.APPID_PARAM}=${Constant.BASE_API_KEY}&" +
+                "${Constant.UNITS_PARAM}=${Constant.UNITS_VALUE}&" +
+                "${Constant.LANGUAGE_PARAM}=$langParam"
         apiManager.executeApiCall(
             urlString,
             CurrentWeather::class.java,
@@ -90,10 +111,12 @@ class RemoteDataSourceImpl : WeatherDataSource.Remote {
         listener: OnResultListener<WeeklyForecast>,
         city: String,
     ) {
+        val langParam = getLanguage()
+        Log.v("ApiManager", langParam)
         val urlString =
             "${Constant.BASE_URL}${Constant.WEEKLY_FORECAST_ENDPOINT}?${Constant.QUERY_PARAM}=$city" +
                 "&${Constant.UNITS_PARAM}=${Constant.UNITS_VALUE}&${Constant.CNT_PARAM}=${Constant.FORECAST_DAY}" +
-                "&${Constant.APPID_PARAM}=${Constant.BASE_API_KEY}"
+                "&${Constant.APPID_PARAM}=${Constant.BASE_API_KEY}&${Constant.LANGUAGE_PARAM}=$langParam"
         apiManager.executeApiCall(
             urlString,
             WeeklyForecast::class.java,
@@ -115,10 +138,12 @@ class RemoteDataSourceImpl : WeatherDataSource.Remote {
         listener: OnResultListener<HourlyForecast>,
         city: String,
     ) {
+        val langParam = getLanguage()
+        Log.v("ApiManager", langParam)
         val urlString =
             "${Constant.PRO_URL}${Constant.HOURLY_FORECAST_ENDPOINT}?${Constant.QUERY_PARAM}=$city" +
                 "&${Constant.UNITS_PARAM}=${Constant.UNITS_VALUE}&${Constant.CNT_PARAM}=${Constant.FORECAST_HOUR}" +
-                "&${Constant.APPID_PARAM}=${Constant.BASE_API_KEY}"
+                "&${Constant.APPID_PARAM}=${Constant.BASE_API_KEY}&${Constant.LANGUAGE_PARAM}=$langParam"
         apiManager.executeApiCall(
             urlString,
             HourlyForecast::class.java,
@@ -169,7 +194,7 @@ class RemoteDataSourceImpl : WeatherDataSource.Remote {
 
     companion object {
         const val SECOND_TO_MILLIS = 1000
-        const val DATE_PATTERN = "EEEE yyyy-MM-dd HH:mm:ss"
+        const val DATE_PATTERN = ", dd MMMM"
         const val DAY_ONLY_PATTERN = "yyyy-MM-dd"
         private var instance: RemoteDataSourceImpl? = null
 

@@ -8,4 +8,9 @@ interface IDBHelper {
     fun getAllFavorite(): List<FavouriteLocation>
 
     fun removeFavoriteItem(id: Long): Int
+
+    fun isFavoriteLocationExists(
+        cityName: String,
+        countryName: String,
+    ): Boolean
 }

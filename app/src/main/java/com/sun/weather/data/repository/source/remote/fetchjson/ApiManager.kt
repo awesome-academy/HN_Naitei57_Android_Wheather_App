@@ -31,9 +31,12 @@ class ApiManager private constructor(private val threadPoolSize: Int) {
     ) {
         getExecutor().submit {
             try {
+                Log.d(LOG_TAG, "Executing API call with URL: $urlString")
                 val responseJson = getJsonStringFromUrl(urlString)
+                Log.d(LOG_TAG, "Response JSON: $responseJson")
                 val gson = Gson()
                 val weather = gson.fromJson(responseJson, responseType)
+                Log.d(LOG_TAG, "Weather: $weather")
                 mHandler.post {
                     listener.onSuccess(weather)
                 }
